@@ -5,7 +5,7 @@ const rootReducer = combineReducers({
     // ...your other reducers here
     // you have to pass login under 'form' key,
     // for custom keys look up the docs for 'getFormState'
-    form: login
+    form: login,
 });
 
 const store = createStore(

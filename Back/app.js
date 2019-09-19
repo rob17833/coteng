@@ -1,29 +1,38 @@
-const  http  =  require('http');
-const  path  =  require('path');
+// libraries
+require('dotenv').config();
 const  express  =  require('express');
-const  bodyParser  =  require('body-parser');
-const  morgan  =  require('morgan');
 const  app  =  express();
+const  bodyParser  =  require('body-parser');
+const addTr = require('./routes/addTr');
 
 
-
-// je configure l'application
-app.use(morgan('dev'));
+// app config
 app.use(bodyParser.urlencoded({ extended:  false }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname  +  '/public'));
-// j'implémente la partie API
-app.get("/", (req,res) => {
-    res.send("youhou");
-})
-/// dans le cas d'une route non trouvée, je retourne le code 404 'Not Found'
+// Add Cors headers, and respect the order !!!
 app.use(function(req, res, next) {
-    var  err  =  new  Error('Not Found');
-    err.status  =  404;
-    next(err);
-});
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
+app.use('/', addTr)
 
-//je lance le serveur node
-let  server  =  app.listen( process.env.PORT  ||  3000, function(){
+// API implementation
+// app.get("/", (res) => {
+//     res.send("Hello world");
+// })
+/// 404 in case of route not found
+// app.use(function(req, res, next) {
+//     var  err  =  new  Error('Not Found');
+//     err.status  =  404;
+//     next(err);
+// });
+
+//starting server
+const  server  =  app.listen( process.env.PORT  ||  5000, function(){
     console.log('Listening on port '  +  server.address().port);
 });

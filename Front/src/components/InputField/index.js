@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.css';
 
 const InputField = ({
    id,
@@ -7,18 +8,19 @@ const InputField = ({
    type,
    className,
    meta: { touched, error },
+   placeholder,
    
 }) => (
    <React.Fragment>
      <label htmlFor={id} className="label-form">
        {label}
-       <input {...input} type={type} id={id} 
+       <input {...input} type={type} id={id} placeholder={placeholder}
 className={className} />
      </label>
      {
        touched
        && error
-       && <div className="color-error">{error}</div>}
+       && <div className="error">{error}</div>}
    </React.Fragment>
 );
 

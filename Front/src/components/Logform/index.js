@@ -1,47 +1,47 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-// import SubmitForm from '../SubmitForm/index';
-import { Form, FormGroup, Container, Row, Col } from 'reactstrap';
+import { Form, Container, Row, Col, Button, Label, FormGroup, Alert } from 'reactstrap';
 import InputField from '../InputField/index';
+import './index.css';
 
-// const renderField = ({ input, label, type, meta: { touched, error } }) => (
-//   <div>
-//     <label>{label}</label>
-//     <div>
-//       <input {...input} placeholder={label} type={type} />
-//       {touched && error && <span>{error}</span>}
-//     </div>
-//   </div>
-// )
 
-// check if const wouldn't be more suitable
 let Logform = props => {
-  const { error, handleSubmit } = props;
+  const { handleLogin, err } = props;
   return (
     <Container>
-      <Row>
-        <Col>
-          <Form onSubmit={handleSubmit}>
+      <h3>Login Page</h3>
+      <Alert color='danger' isOpen= { err }>Failed</Alert>
+      <Form onSubmit={ handleLogin } className="form">
+        <Row form>
+          <Col md={12}>
             <FormGroup>
-              <label htmlFor="username">username</label>
+              <Label for="username">Username</Label>
               <Field
                 id="username"
                 name="username"
                 component={InputField}
-                type="text" />
-              <label htmlFor="password">password</label>
+                type="text"
+                placeholder="Username"
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row form>
+          <Col md={12}>
+            <FormGroup>
+              <Label for="password">Password</Label>
               <Field
                 id="password" 
                 name="password" 
                 component={InputField} 
                 type="password"
+                placeholder="Password"
               />
-              {error && <strong>{error}</strong>}
             </FormGroup>
-            <button type="submit">Submit</button>
-          </Form>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+        <Button>Enter</Button>
+      </Form>
     </Container>
   )
 };
