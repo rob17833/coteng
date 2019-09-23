@@ -16,6 +16,7 @@ class TimeRegPage extends React.Component {
   }
 
   handleSend = (values) => {
+    alert(values)
     const config = {
       method: 'POST',
       headers: {
@@ -24,7 +25,7 @@ class TimeRegPage extends React.Component {
       },
       body: JSON.stringify(values)
     };
-    console.log(config.body)
+    console.log(values)
     const url = 'http://localhost:5000/addTr';
 
     fetch(url, config)
