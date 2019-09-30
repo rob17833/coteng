@@ -5,6 +5,6 @@ const connection = mysql.createConnection ({
     db_port:'3306',
     user:'root',
     password:'8bkzdzx2y99',
-    database:'coteng',
+    database:'mydb',
 });
 module.exports = connection;

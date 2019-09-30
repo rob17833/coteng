@@ -21,7 +21,7 @@ let TimeRegForm = (props) => {
             <Field
               id="employee"
               type="text"
-              name="employee"
+              name="employee_Id"
               component={InputField}
               className="form-control"
               placeholder="Employee"
@@ -63,7 +63,7 @@ let TimeRegForm = (props) => {
             <Field
               id="customer"
               type="text"
-              name="customer"
+              name="customer_Id"
               component={InputField}
               className="form-control"
               placeholder="Customer"
@@ -73,7 +73,7 @@ let TimeRegForm = (props) => {
             <Field
               id="invoiceCode"
               type="text"
-              name="invoiceCode"
+              name="invoiceCode_Id"
               component={InputField}
               className="form-control"
               placeholder="InvoiceCode"
@@ -83,7 +83,7 @@ let TimeRegForm = (props) => {
             <Field
               id="issueNumber"
               type="text"
-              name="issueNumber"
+              name="issueNumber_Id"
               component={InputField}
               className="form-control"
               placeholder="IssueNumber"
@@ -93,7 +93,7 @@ let TimeRegForm = (props) => {
             <Field
               id="issueName"
               type="text"
-              name="issueName"
+              name="issueName_Id"
               component={InputField}
               className="form-control"
               placeholder="IssueName"
@@ -105,7 +105,7 @@ let TimeRegForm = (props) => {
             <Field
               id="workType"
               type="text"
-              name="workType"
+              name="workType_Id"
               component={InputField}
               className="form-control"
               placeholder="WorkType"
@@ -115,7 +115,7 @@ let TimeRegForm = (props) => {
             <Field
               id="ticketNumber"
               type="text"
-              name="ticketNumber"
+              name="ticketNumber_Id"
               component={InputField}
               className="form-control"
               placeholder="TicketNumber"
@@ -125,7 +125,7 @@ let TimeRegForm = (props) => {
             <Field
               id="ticketCountry"
               type="text"
-              name="ticketCountry"
+              name="ticketCountry_Id"
               component={InputField}
               className="form-control"
               placeholder="TicketCountry"
@@ -150,8 +150,8 @@ let TimeRegForm = (props) => {
 
 const validate = (values) => {
   const errors = {};
-  if (!values.employee){
-    errors.employee = 'Employee is required';
+  if (!values.employee_Id){
+    errors.employee_Id = 'Employee is required';
   }
   if (!values.date){
     errors.date = 'Date is required';
@@ -162,23 +162,23 @@ const validate = (values) => {
   if (!values.endTime){
     errors.endTime = 'EndTime is required'
   }
-  if(!values.customer){
-    errors.customer = 'Customer is required'
+  if(!values.customer_Id){
+    errors.customer_Id = 'Customer is required'
   }
-  if(!values.invoiceCode){
-    errors.invoiceCode = 'InvoiceCode is required'
+  if(!values.invoiceCode_Id){
+    errors.invoiceCode_Id = 'InvoiceCode is required'
   }
-  if(!values.issueNumber){
-    errors.issueNumber = 'IssueNumber is required'
+  if(!values.issueNumber_Id){
+    errors.issueNumber_Id = 'IssueNumber is required'
   }
-  if(!values.issueName){
-    errors.issueName = 'IssueName is required'
+  if(!values.issueName_Id){
+    errors.issueName_Id = 'IssueName is required'
   }
-  if(!values.workType){
-    errors.workType = 'WorkType is required'
+  if(!values.workType_Id){
+    errors.workType_Id = 'WorkType is required'
   }
-  if(!values.ticketCountry){
-    errors.ticketCountry = 'TicketCountry is required'
+  if(!values.ticketCountry_Id){
+    errors.ticketCountry_Id = 'TicketCountry is required'
   }
   if (!values.description){
     errors.description = 'Description is required'
