@@ -1,6 +1,7 @@
 
 import React from 'react'
 import Logform from '../Logform';
+// import  Header from '../Header';
 import { withRouter } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 
@@ -11,6 +12,8 @@ class Logpage extends React.Component {
       err: false
     };
   }
+
+  // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
   
   handleSubmit = (values) => {
     const config = {
@@ -23,14 +26,18 @@ class Logpage extends React.Component {
     };
     
     const url = 'http://localhost:5000/auth/login';
-    // const { history } = this.props;
+    const { history } = this.props;
     
     fetch(url, config)
       .then((res) => {
         if (res.status === 200){
-          console.log(res)
+          if(values.username==='didier'){
+            history.push('/didier')
+          } else {
+            history.push('/timereg')
+          }
         } else {
-          console.log(res)
+          this.setState({ err: true })
         }
       });
   }
@@ -46,7 +53,6 @@ class Logpage extends React.Component {
         </Row>
       </Container>
     );
-      
   }
 }
 

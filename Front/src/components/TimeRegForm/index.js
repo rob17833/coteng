@@ -9,15 +9,14 @@ import InputField from '../InputField/index';
 
 
 let TimeRegForm = (props) => {
-  const { handleSubmit, err, success } = props;
+  const { handleSubmit, err, success, reset, pristine, submitting } = props;
   return (
-    <Container>
+    <Container fluid={true}>
       <Form onSubmit={handleSubmit} className="form">
-        <h3 className="title">Internal Worksheet</h3>
         <Alert color='danger' isOpen={err}>Failed</Alert>
         <Alert color='success' isOpen={success}>Database has been updated successfully !</Alert>
-        <Row form>
-          <Col md={3}>
+        <Row noGutters={true}>
+          <Col>
             <Field
               id="employee"
               type="text"
@@ -27,39 +26,39 @@ let TimeRegForm = (props) => {
               placeholder="Employee"
             />
           </Col>
-          <Col md={3}>
+          <Col>
             <Field
               id="date"
-              type="text"
+              type="date"
               name="date"
               component={InputField}
               className="form-control"
               placeholder="Date"
             />
           </Col>
-          <Col md={3}>
+        </Row>
+        <Row noGutters={true}>
+          <Col>
             <Field
               id="startTime"
-              type="text"
+              type="time"
               name="startTime"
               component={InputField}
               className="form-control"
               placeholder="StartTime"
             />
           </Col>
-          <Col md={3}>
+          <Col>
             <Field
               id="endTime"
-              type="text"
+              type="time"
               name="endTime"
               component={InputField}
               className="form-control"
               placeholder="EndTime"
             />
           </Col>
-        </Row>
-        <Row form>
-          <Col md={3}>
+          <Col>
             <Field
               id="customer"
               type="text"
@@ -69,7 +68,7 @@ let TimeRegForm = (props) => {
               placeholder="Customer"
             />
           </Col>
-          <Col md={3}>
+          <Col>
             <Field
               id="invoiceCode"
               type="text"
@@ -79,7 +78,7 @@ let TimeRegForm = (props) => {
               placeholder="InvoiceCode"
             />
           </Col>
-          <Col md={3}>  
+          <Col>  
             <Field
               id="issueNumber"
               type="text"
@@ -89,7 +88,7 @@ let TimeRegForm = (props) => {
               placeholder="IssueNumber"
             />
           </Col>  
-          <Col md={3}>  
+          <Col>  
             <Field
               id="issueName"
               type="text"
@@ -99,9 +98,7 @@ let TimeRegForm = (props) => {
               placeholder="IssueName"
             />
           </Col>
-        </Row>
-        <Row form>
-          <Col md={3}>
+          <Col>
             <Field
               id="workType"
               type="text"
@@ -111,7 +108,7 @@ let TimeRegForm = (props) => {
               placeholder="WorkType"
             />
           </Col>
-          <Col md={3}>
+          <Col>
             <Field
               id="ticketNumber"
               type="text"
@@ -121,7 +118,7 @@ let TimeRegForm = (props) => {
               placeholder="TicketNumber"
             />
           </Col>
-          <Col md={3}>
+          <Col>
             <Field
               id="ticketCountry"
               type="text"
@@ -131,7 +128,7 @@ let TimeRegForm = (props) => {
               placeholder="TicketCountry"
             />
           </Col>
-          <Col md={3}>
+          <Col>
             <Field
               id="description"
               type="text"
@@ -142,7 +139,10 @@ let TimeRegForm = (props) => {
             />
           </Col>
         </Row>
-        <Button>SEND</Button>
+        <Row>
+          <Button type='submit' disabled={submitting}>SEND</Button>
+          <Button type='button' disabled={ pristine || submitting} onClick={reset}>RESET</Button> 
+        </Row>
       </Form>
     </Container>
   );
@@ -161,6 +161,10 @@ const validate = (values) => {
   }
   if (!values.endTime){
     errors.endTime = 'EndTime is required'
+  } else {
+    if (values.endTime<=values.startTime){
+      errors.endTime = 'Incorrect value'
+    }
   }
   if(!values.customer_Id){
     errors.customer_Id = 'Customer is required'
@@ -190,7 +194,7 @@ const validate = (values) => {
 
 
 TimeRegForm = reduxForm({
-  form: 'login',
+  form: 'timereg',
   validate
 })(TimeRegForm);
 export default TimeRegForm;

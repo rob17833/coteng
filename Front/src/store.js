@@ -1,11 +1,11 @@
 import { createStore, combineReducers} from 'redux';
-import { reducer as login } from 'redux-form';
+import { reducer as formReducer } from 'redux-form';
 
 const rootReducer = combineReducers({
     // ...your other reducers here
-    // you have to pass login under 'form' key,
+    // you have to pass formReducer under 'form' key,
     // for custom keys look up the docs for 'getFormState'
-    form: login,
+    form: formReducer,
 });
 
 const store = createStore(

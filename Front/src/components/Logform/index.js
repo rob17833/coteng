@@ -1,45 +1,35 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Form, Container, Row, Col, Button, Label, FormGroup, Alert } from 'reactstrap';
+import { Form, Container, Button, Label, FormGroup, Alert } from 'reactstrap';
 import InputField from '../InputField/index';
 import './index.css';
 
 
 let Logform = props => {
-  const { handleLogin, err } = props;
+  const { handleSubmit, err } = props;
   return (
     <Container>
       <h3>Login Page</h3>
-      <Alert color='danger' isOpen= { err }>Failed</Alert>
-      <Form onSubmit={ handleLogin } className="form">
-        <Row form>
-          <Col md={12}>
-            <FormGroup>
-              <Label for="username">Username</Label>
-              <Field
-                id="username"
-                name="username"
-                component={InputField}
-                type="text"
-                placeholder="Username"
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row form>
-          <Col md={12}>
-            <FormGroup>
-              <Label for="password">Password</Label>
-              <Field
-                id="password" 
-                name="password" 
-                component={InputField} 
-                type="password"
-                placeholder="Password"
-              />
-            </FormGroup>
-          </Col>
-        </Row>
+      <Alert color='danger' isOpen= { err }>Incorrect Username and/or Password!</Alert>
+      <Form onSubmit={ handleSubmit } className="form">
+        <FormGroup>
+          <Label for="username">Username</Label>
+          <Field
+            id="username"
+            name="username"
+            component={InputField}
+            type="text"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="password">Password</Label>
+          <Field
+            id="password" 
+            name="password" 
+            component={InputField} 
+            type="password"
+          />
+        </FormGroup>
         <Button>Enter</Button>
       </Form>
     </Container>
@@ -63,8 +53,10 @@ const validate = (values) => {
 
 Logform = reduxForm({
   // a unique name for the form
-  form: 'login',
+  form: 'logform',
   validate,
+  destroyOnUnmount : false,
+  forceUnregisterOnUnmount: true
 })(Logform)
 
 export default Logform;
