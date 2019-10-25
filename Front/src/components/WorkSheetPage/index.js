@@ -8,14 +8,15 @@ class WorkSheetPage extends React.Component {
 			worksheet: []
 		};
 	}
-// insert params to get user values to be done
+// insert params to get user values
 	componentDidMount() {
 		let inital = [];
 		const user = this.props.userValues
 		fetch(`http://localhost:5000/search?username=${user}`)
 			.then(response => {
 				return response.json();
-			}).then(data => {
+			})
+			.then(data => {
 				inital = data.map((element) => {
 					return element
 				});
@@ -24,6 +25,10 @@ class WorkSheetPage extends React.Component {
 					worksheet: inital,
 				});
 			});
+	}
+// attempt to trigger refresh this page
+	refresh = () => {
+		return document.location.reload(true)
 	}
 
 	render() {

@@ -20,7 +20,7 @@ class Worksheet extends React.Component {
 								'Ticket Country',
 								'Description']
 		};
-
+		
 	}
 
 	renderTableData() {

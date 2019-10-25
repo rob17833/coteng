@@ -2,6 +2,16 @@
     padding: 3em 1em 1em;
     border: 1px solid #d8d8d8;
 }
+.success {
+    padding: 3em 1em 1em;
+    border: 1px solid #d8d8d8;
+    background-color: rgb(194, 250, 194);
+}
+.fail {
+    padding: 3em 1em 1em;
+    border: 1px solid #d8d8d8;
+    background-color: rgb(247, 192, 192);
+}
 
 .title {
     color: #212529;

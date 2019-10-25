@@ -26,7 +26,7 @@ userRouter.get('/ws', (req, res) => {
 // select worksheet by employee
 userRouter.get('/:id', (req, res) => {
     const user = req.query.username
-    connection.query('SELECT* from timeregistration WHERE employee_Id=?', user, (error, results) =>{
+    connection.query('SELECT* from timeregistration WHERE employee_Id=? AND date=CURRENT_DATE()', user, (error, results) =>{
         if (error) {
             return res.status(500).send('something went wrong')
         }

@@ -12,17 +12,23 @@ class TimeRegPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      err: false,
-      success:false,
+      status: 'form',
       user: ''
     };
   }
 
   componentWillMount(){
     this.setState({
-      user: this.props.userValues.username,
-      forceUnregisterOnUnmount: true
-    })
+      user : localStorage.getItem("username")
+    });
+  }
+
+  Today = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    return `${yyyy}-${mm}-${dd}`
   }
 
   handleSend = (values) => {
@@ -34,27 +40,34 @@ class TimeRegPage extends React.Component {
       },
       body: JSON.stringify(values)
     };
-    console.log(values)
+    console.log(config.body)
     const url = 'http://localhost:5000/addTr';
 
     fetch(url, config)
-      .then((res) => {
-        if (res.status===200){
-          this.setState({ success: true})
-        } else {
-          this.setState({ err: true });
-        }
-      });
-      // last thing I've done on last friday
-    this.props.reset()
+    .then((res) => {
+      if (res.status===200){
+        this.setState({ status: 'success'})
+      } else {
+        this.setState({ status: 'fail' });
+      }
+    })
+    .then(setTimeout(function (){
+      this.setState({
+        status: 'form'
+      });}.bind(this), 2000
+    ));
   }
-  
+   
   render() {
-    const { err, success } = this.state;
+    const { status } = this.state;
     return (
       <div>
-        <Header userValues={this.props.userValues} />
-        <TimeRegForm onSubmit={ this.handleSend } err={ err } success={ success }/>
+        <Header userValues={this.state.user} />
+        <TimeRegForm
+          onSubmit={ this.handleSend }
+          status={ status } 
+          initialValues={{employee_Id: this.state.user, date: this.Today()}}
+        />
         <Container fluid={true}>
           <WorkSheetPage userValues={this.state.user} />
         </Container>

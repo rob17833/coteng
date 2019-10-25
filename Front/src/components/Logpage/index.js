@@ -16,6 +16,7 @@ class Logpage extends React.Component {
   // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
   
   handleSubmit = (values) => {
+    localStorage.setItem("username", values.username);
     const config = {
       method: 'POST',
       headers: {

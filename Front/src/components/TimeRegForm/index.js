@@ -2,26 +2,25 @@ import React from 'react';
 import './index.css';
 import { reduxForm, Field } from 'redux-form';
 import {
-  Form, Button, Container, Row, Col, Alert,
+  Form, Button, Container, Row, Col
 }
   from 'reactstrap';
 import InputField from '../InputField/index';
+// import Today from '../Today';
 
 
 let TimeRegForm = (props) => {
-  const { handleSubmit, err, success, reset, pristine, submitting } = props;
+  const { handleSubmit, status, reset, pristine, submitting } = props;
   return (
     <Container fluid={true}>
-      <Form onSubmit={handleSubmit} className="form">
-        <Alert color='danger' isOpen={err}>Failed</Alert>
-        <Alert color='success' isOpen={success}>Database has been updated successfully !</Alert>
-        <Row noGutters={true}>
+      <Form onSubmit={handleSubmit} className={status}>
+        <Row>
           <Col>
             <Field
               id="employee"
-              type="text"
+              type="hidden"
               name="employee_Id"
-              component={InputField}
+              component="input"
               className="form-control"
               placeholder="Employee"
             />
@@ -29,15 +28,15 @@ let TimeRegForm = (props) => {
           <Col>
             <Field
               id="date"
-              type="date"
+              type="hidden"
               name="date"
-              component={InputField}
+              component="input"
               className="form-control"
               placeholder="Date"
             />
           </Col>
         </Row>
-        <Row noGutters={true}>
+        <Row>
           <Col>
             <Field
               id="startTime"
@@ -140,8 +139,10 @@ let TimeRegForm = (props) => {
           </Col>
         </Row>
         <Row>
-          <Button type='submit' disabled={submitting}>SEND</Button>
-          <Button type='button' disabled={ pristine || submitting} onClick={reset}>RESET</Button> 
+          <Col>
+            <Button color="primary" type='submit' disabled={pristine || submitting}>SEND</Button>{' '}
+            <Button color="primary" type='button' disabled={ pristine || submitting} onClick={ reset }>RESET</Button> 
+          </Col>
         </Row>
       </Form>
     </Container>

@@ -8,14 +8,18 @@ const Header = props => {
 	return (
 		<Container fluid={true}>
 			<Row>
-				<Col md='6'>
+				<Col md='12'>
 					<h1>Coteng</h1>
 				</Col>
-				<Col md='6'>
+			</Row>
+			<Row>
+				<Col>
 					<p>
-						You are connected as: {userValues.username}
+						You are connected as: {userValues} 
 					</p>
-				<NavLink to='/' tag={RRNavLink}>Logout</NavLink>
+				</Col>
+				<Col>
+					<NavLink to='/' tag={RRNavLink}>Logout</NavLink>
 				</Col>
 			</Row>
 		</Container>
