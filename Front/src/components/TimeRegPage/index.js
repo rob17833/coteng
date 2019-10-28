@@ -17,7 +17,7 @@ class TimeRegPage extends React.Component {
       user: ''
     };
   }
-
+// !!!change to componentDidMount !!!!!
   componentWillMount(){
     this.setState({
       user : localStorage.getItem("username")

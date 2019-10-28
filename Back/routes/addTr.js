@@ -23,6 +23,19 @@ userRouter.get('/ws', (req, res) => {
         res.json(results);
     });
 });
+
+// select ws by dates
+userRouter.post('/startDate/endDate', (req, res) => {
+    const start = req.body.startDate;
+    const end = req.body.endDate;
+    connection.query('SELECT time, employee_Id, date, customer_Id, invoiceCode_Id, issueNumber_Id, issueName_Id, ticketCountry_Id, ticketNumber_Id from timeregistration WHERE date>=? AND date<=? ', [start, end], (error, results) =>{
+        if (error){
+            return res.sendStatus(500).send('aie, pas bon')
+        }
+        res.json(results);
+        console.log(results)
+    })
+})
 // select worksheet by employee
 userRouter.get('/:id', (req, res) => {
     const user = req.query.username
