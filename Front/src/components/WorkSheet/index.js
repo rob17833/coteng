@@ -11,6 +11,7 @@ class Worksheet extends React.Component {
 								'Date',
 								'Start Time',
 								'End Time',
+								'Time',
 								'Issue Number',
 								'Issue Name',
 								'Customer',
@@ -29,6 +30,7 @@ class Worksheet extends React.Component {
 				date,
 				startTime,
 				endTime,
+				time,
 				customer_Id,
 				invoiceCode_Id,
 				workType_Id,
@@ -45,6 +47,7 @@ class Worksheet extends React.Component {
 					<td>{date}</td>
 					<td>{startTime}</td>
 					<td>{endTime}</td>
+					<td>{time}</td>
 					<td>{issueNumber_Id}</td>
 					<td>{issueName_Id}</td>
 					<td>{customer_Id}</td>

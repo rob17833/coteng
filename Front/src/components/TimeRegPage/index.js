@@ -7,6 +7,7 @@ import Header from '../Header';
 import { withRouter } from 'react-router-dom';
 import WorkSheetPage from '../WorkSheetPage';
 import { Container } from 'reactstrap';
+import moment from 'moment';
 
 class TimeRegPage extends React.Component {
   constructor(props) {
@@ -32,6 +33,12 @@ class TimeRegPage extends React.Component {
   }
 
   handleSend = (values) => {
+    const a = moment.duration(values.startTime, 'HH:mm');
+    const b = moment.duration(values.endTime, 'HH:mm' );
+    const c = b.subtract(a).asMinutes();
+    values.time = c/60;
+    values.employee_Id = this.state.user;
+    values.date = this.Today();
     const config = {
       method: 'POST',
       headers: {
@@ -40,7 +47,7 @@ class TimeRegPage extends React.Component {
       },
       body: JSON.stringify(values)
     };
-    console.log(config.body)
+    console.log(values)
     const url = 'http://localhost:5000/addTr';
 
     fetch(url, config)

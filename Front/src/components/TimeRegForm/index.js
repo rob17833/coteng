@@ -14,7 +14,7 @@ let TimeRegForm = (props) => {
   return (
     <Container fluid={true}>
       <Form onSubmit={handleSubmit} className={status}>
-        <Row>
+        {/* <Row>
           <Col>
             <Field
               id="employee"
@@ -35,7 +35,7 @@ let TimeRegForm = (props) => {
               placeholder="Date"
             />
           </Col>
-        </Row>
+        </Row> */}
         <Row>
           <Col>
             <Field
@@ -151,12 +151,12 @@ let TimeRegForm = (props) => {
 
 const validate = (values) => {
   const errors = {};
-  if (!values.employee_Id){
-    errors.employee_Id = 'Employee is required';
-  }
-  if (!values.date){
-    errors.date = 'Date is required';
-  }
+  // if (!values.employee_Id){
+  //   errors.employee_Id = 'Employee is required';
+  // }
+  // if (!values.date){
+  //   errors.date = 'Date is required';
+  // }
   if (!values.startTime){
     errors.startTime = 'StartTime is required'
   }
