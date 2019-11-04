@@ -10,21 +10,11 @@ class WorkSheetPage extends React.Component {
 	}
 // insert params to get user values
 	componentDidMount() {
-		let inital = [];
-		const user = this.props.userValues
-		fetch(`http://localhost:5000/search?username=${user}`)
-			.then(response => {
-				return response.json();
-			})
-			.then(data => {
-				inital = data.map((element) => {
-					return element
-				});
-				console.log(inital);
-				this.setState({
-					worksheet: inital,
-				});
-			});
+		const data = this.props.datas
+		this.setState({
+			worksheet: data
+		})
+		console.log(this.props.datas);
 	}
 // attempt to trigger refresh this page
 	UNSAFE_componentWillUpdate(prevProps, prevState) {
