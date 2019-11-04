@@ -27,8 +27,10 @@ class WorkSheetPage extends React.Component {
 			});
 	}
 // attempt to trigger refresh this page
-	refresh = () => {
-		return document.location.reload(true)
+	UNSAFE_componentWillUpdate(prevProps, prevState) {
+		if (prevProps.update !== this.props.update){
+			this.componentDidMount()
+		};
 	}
 
 	render() {

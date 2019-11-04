@@ -1,6 +1,5 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-
 import {
 	Button,
 	Container,
@@ -57,10 +56,14 @@ let GetIntervalForm = (props) => {
 const validate = (values) => {
 	const errors = {};
 	if (!values.startDate){
-    errors.startDate = 'StartDate is required'
+    errors.startDate = 'Start Date is required'
   }
-	if (!values.startDate){
-    errors.startDate = 'StartDate is required'
+	if (!values.endDate){
+    errors.endDate = 'End Date is required'
+	} else {
+		if (values.endDate<values.startDate){
+			errors.endDate = 'End Date must be bigger than Start Date'
+		}
 	}
 	return errors;
 };

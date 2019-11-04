@@ -24,7 +24,7 @@ userRouter.get('/ws', (req, res) => {
     });
 });
 
-// select ws by dates
+// select ws by dates for admin
 userRouter.post('/startDate/endDate', (req, res) => {
     const start = req.body.startDate;
     const end = req.body.endDate;

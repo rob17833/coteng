@@ -1,13 +1,14 @@
 import React from 'react';
 // import Slot from '../Slot';
 import { Table } from 'reactstrap';
+import { ButtonGroup, Button } from 'reactstrap';
 
 class Worksheet extends React.Component {
 	//eslint-disable-next-line
 	constructor() {
 		super();
 		this.state = {
-			headers : ['Who',
+			headers : [
 								'Date',
 								'Start Time',
 								'End Time',
@@ -19,7 +20,9 @@ class Worksheet extends React.Component {
 								'Type',
 								'Ticket Number',
 								'Ticket Country',
-								'Description']
+								'Description',
+								'Edit/Delete'
+							]
 		};
 		
 	}
@@ -39,11 +42,9 @@ class Worksheet extends React.Component {
 				description,
 				ticketCountry_Id,
 				ticketNumber_Id,
-				employee_Id
 			} = slot
 			return (
 				<tr key={index}>
-					<td>{employee_Id}</td>
 					<td>{date}</td>
 					<td>{startTime}</td>
 					<td>{endTime}</td>
@@ -56,6 +57,12 @@ class Worksheet extends React.Component {
 					<td>{ticketNumber_Id}</td>
 					<td>{ticketCountry_Id}</td>
 					<td>{description}</td>
+					<td>
+						<ButtonGroup>
+							<Button color='primary' size='sm'>Edit</Button>
+							<Button color='danger' size='sm'>Delete</Button>
+						</ButtonGroup>
+					</td>
 				</tr>
 			)
 		})

@@ -14,11 +14,12 @@ class TimeRegPage extends React.Component {
     super(props);
     this.state = {
       status: 'form',
-      user: ''
+      user: '',
+      refreshSheet: true,
     };
   }
-// !!!change to componentDidMount !!!!!
-  componentWillMount(){
+  //refund: move to WorkSheetPage and pass it by props to TimeRegPage
+  UNSAFE_componentWillMount(){
     this.setState({
       user : localStorage.getItem("username")
     });
@@ -60,13 +61,15 @@ class TimeRegPage extends React.Component {
     })
     .then(setTimeout(function (){
       this.setState({
-        status: 'form'
+        status: 'form',
+        refreshSheet: !this.state.refreshSheet
       });}.bind(this), 2000
-    ));
+      ));
+      console.log(this.state.refreshSheet);
   }
    
   render() {
-    const { status } = this.state;
+    const { status, refreshSheet } = this.state;
     return (
       <div>
         <Header userValues={this.state.user} />
@@ -76,7 +79,7 @@ class TimeRegPage extends React.Component {
           initialValues={{employee_Id: this.state.user, date: this.Today()}}
         />
         <Container fluid={true}>
-          <WorkSheetPage userValues={this.state.user} />
+          <WorkSheetPage userValues={this.state.user} update={refreshSheet} />
         </Container>
       </div>
     );

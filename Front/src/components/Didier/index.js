@@ -18,7 +18,7 @@ class Didier extends React.Component {
 		}
 	}
 
-	componentWillMount(){
+	UNSAFE_componentWillMount(){
     this.setState({
       user : localStorage.getItem("username")
     });
