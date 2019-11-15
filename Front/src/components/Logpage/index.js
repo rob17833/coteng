@@ -35,7 +35,7 @@ class Logpage extends React.Component {
           if(values.username==='didier'){
             history.push('/didier')
           } else {
-            history.push('/timereg')
+            history.push('/worksheetpage')
           }
         } else {
           this.setState({ err: true })

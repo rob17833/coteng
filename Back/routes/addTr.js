@@ -15,14 +15,14 @@ userRouter.post('/addTr', (req, res) => {
     })
 })
 // get user entries
-userRouter.get('/ws', (req, res) => {
-    connection.query('SELECT * from timeregistration', (error, results) => {
-        if (error) {
-            return res.status(500).send('erreur lors du chargement')
-        }
-        res.json(results);
-    });
-});
+// userRouter.get('/ws', (req, res) => {
+//     connection.query('SELECT * from timeregistration', (error, results) => {
+//         if (error) {
+//             return res.status(500).send('erreur lors du chargement')
+//         }
+//         res.json(results);
+//     });
+// });
 
 // select ws by dates for admin
 userRouter.post('/startDate/endDate', (req, res) => {
@@ -37,40 +37,41 @@ userRouter.post('/startDate/endDate', (req, res) => {
     })
 })
 // select worksheet by employee
-userRouter.get('/:id', (req, res) => {
-    const user = req.query.username
-    connection.query('SELECT* from timeregistration WHERE employee_Id=? AND date=CURRENT_DATE()', user, (error, results) =>{
+userRouter.post('/:id', (req, res) => {
+    const user = req.query.username;
+    const formData = req.body.getDataByDate;
+    console.log(`back ${req.body.getDataByDate}`);
+    connection.query('SELECT* from timeregistration WHERE employee_Id=? AND date=?', [user, formData], (error, results) =>{
         if (error) {
             return res.status(500).send('something went wrong')
         }
         res.json(results);
     });
 })
-// Logpage
-// userRouter.post('/auth/login', (req, res) => {
-//     const user = req.body;
-//     connection.query('SELECT* from employee where username = ?', [user.username], (error, results) => {
-//         if (error) {
-//             return res.sendStatus(500);
-//         }
-//         res.json(results);
-//     })
-// })
-
+// verify usersname and password
 userRouter.post('/auth/login', function(req, res) {
     const user = req.body.username;
     const password = req.body.password;
-    if (user && password) {
-        connection.query('SELECT * from employee where username=? AND password=?', [user, password], (error, results) => {
-            console.log(results)
-            if (results.length > 0) {
-                return res.sendStatus(200)
+    connection.query('SELECT * from employee where username=? AND password=?', [user, password], (error, results) => {
+        console.log(results)
+        if (results.length > 0) {
+            return res.sendStatus(200)
+        }
+        res.sendStatus(500);
+    })
+});
+
+// delete row
+userRouter.delete('/delete/:id', function(req, res){
+    const id = req.params.id;
+    if (id) {
+        connection.query('DELETE from timeregistration WHERE timeregistrationId=?', id, (error) => {
+            if (error){
+                return res.status(500).send('something wrong happened')
             }
-            res.sendStatus(500);
-        })
-    } else {
-        res.sendStatus(500)
+            res.status(200).send('deleted!');
+        });
     };
-})
+});
 
 module.exports = userRouter;

@@ -4,7 +4,6 @@ import { Container, Row, Col } from 'reactstrap';
 import { NavLink } from 'reactstrap';
 const Header = props => {
 	const { userValues } = props;
-	console.log(userValues);
 	return (
 		<Container fluid={true}>
 			<Row>

@@ -5,10 +5,11 @@ import { ButtonGroup, Button } from 'reactstrap';
 
 class Worksheet extends React.Component {
 	//eslint-disable-next-line
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			headers : [
+								'Id',
 								'Date',
 								'Start Time',
 								'End Time',
@@ -25,11 +26,13 @@ class Worksheet extends React.Component {
 							]
 		};
 		
+		console.log()
 	}
-
+	
 	renderTableData() {
 		return this.props.state.worksheet.map((slot, index) =>{
 			const {
+				timeRegistrationId,
 				date,
 				startTime,
 				endTime,
@@ -45,6 +48,7 @@ class Worksheet extends React.Component {
 			} = slot
 			return (
 				<tr key={index}>
+					<td>{timeRegistrationId}</td>
 					<td>{date}</td>
 					<td>{startTime}</td>
 					<td>{endTime}</td>
@@ -60,7 +64,7 @@ class Worksheet extends React.Component {
 					<td>
 						<ButtonGroup>
 							<Button color='primary' size='sm'>Edit</Button>
-							<Button color='danger' size='sm'>Delete</Button>
+							<Button color='danger' size='sm' onClick={()=>this.props.deleteRow(slot.timeRegistrationId)}>Delete</Button>
 						</ButtonGroup>
 					</td>
 				</tr>

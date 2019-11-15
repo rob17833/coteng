@@ -1,36 +1,109 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import WorkSheet from '../WorkSheet';
+import TimeRegPage from '../TimeRegPage';
+import Header from '../Header';
+import SearchBar from '../SearchBar';
 
 class WorkSheetPage extends React.Component {
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
-			worksheet: []
+			worksheet: [],
+			user: localStorage.getItem('username'),
+			getDataByDate: this.getToday()
 		};
+		this.getData = this.getData.bind(this);
+		this.deleteData = this.deleteData.bind(this);
+		this.getToday = this.getToday.bind(this);
+		console.log(`state ${this.state.getDataByDate}`);
 	}
-// insert params to get user values
-	componentDidMount() {
-		const data = this.props.datas
+	
+	getToday () {
+		var today = new Date();
+		var dd = String(today.getDate()).padStart(2, '0');
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = today.getFullYear();
+		return `${yyyy}-${mm}-${dd}`
+	}
+
+	componentDidMount () {
+		this.getData();
+	};
+
+	handleSubmit = (values) => {
+		const date = values.date
 		this.setState({
-			worksheet: data
-		})
-		console.log(this.props.datas);
-	}
-// attempt to trigger refresh this page
-	UNSAFE_componentWillUpdate(prevProps, prevState) {
-		if (prevProps.update !== this.props.update){
-			this.componentDidMount()
+			getDataByDate: date
+		});
+		console.log(this.state.getDataByDate);
+	};
+
+	getData () {
+		const user = this.state.user;
+		let inital = [];
+		const url = `http://localhost:5000/search?username=${user}`;
+		const config = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-type':'application/json',
+      },
+      body: JSON.stringify(this.state)
 		};
+		console.log(`check date before sending ${config.body}`);
+		fetch(url, config)
+		.then(response => {
+			return response.json();
+		})
+		.then(data => {
+			inital = data.map((element) => {
+				return element
+			});
+			this.setState({
+				worksheet: inital,
+			});
+		});
 	}
+	
+	deleteData (deleteSlot) {
+		console.log(deleteSlot);
+		const config = {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+				'Content-type':'application/json',
+				'Acces-Control-Allow-Origin-Methods': 'DELETE',
+				'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, HEAD'
+      },
+		};
+		const url = `http://localhost:5000/delete/${deleteSlot}`;
+		fetch(url, config)
+		.then((res) => {
+      if (res.status===200){
+				this.getData();
+				console.log('youppiiieeeee');
+      } else {
+        console.log('merrrrdddeeeee ;(')
+      }
+		})
+	};
 
 	render() {
+		const { user } = this.state;
 		return (
 			<div>
-				<WorkSheet state={this.state} />
+        <Header userValues={user} />
+				<TimeRegPage getToday={this.getToday}  getData={this.getData} user={user} />
+				<SearchBar onSubmit={this.handleSubmit} />
+				<WorkSheet  deleteRow={this.deleteData} state={this.state} />
 			</div>
 		)
-
 	}
 }
 
-export default WorkSheetPage;
+export default withRouter(WorkSheetPage);
+
+// export default withRouter(connect(state => ({
+//   userDate : getFormValues('searchbar')(state),
+// })) (WorkSheetPage));
