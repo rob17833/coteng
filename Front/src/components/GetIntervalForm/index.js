@@ -7,7 +7,8 @@ import {
 	Col,
 	Form,
 	FormGroup,
-	ButtonGroup
+	ButtonGroup,
+	Label
 } from 'reactstrap';
 import InputField from '../InputField';
 
@@ -39,6 +40,44 @@ let GetIntervalForm = (props) => {
 							/>
 						</FormGroup>
 					</Col>
+					<Col>
+						<FormGroup>
+							<Field
+								id="invoiceCode"
+								type="text"
+								name="invoiceCode"
+								component={InputField}
+								placeholder="Invoice Code"
+							/>
+						</FormGroup>
+					</Col>
+					<Col>
+						<FormGroup tag="fieldset">
+							<legend>Sorted by</legend>
+							<FormGroup check>
+								<Label check>
+									<Field
+										name="radio"
+										type="radio"
+										component="input"
+										value="invoiceCode"
+									/>
+								{' '}Invoice Code
+								</Label>
+							</FormGroup>
+							<FormGroup check>
+								<Label check>
+									<Field
+										name="radio"
+										type="radio"
+										component="input"
+										value="issueNumber"
+									/>
+								{' '}Issue Number
+								</Label>
+							</FormGroup>
+						</FormGroup>
+					</Col>
 				</Row>
 				<Row>
 					<Col>
@@ -65,6 +104,9 @@ const validate = (values) => {
 			errors.endDate = 'End Date must be bigger than Start Date'
 		}
 	}
+	if (!values.invoiceCode){
+    errors.invoiceCode = 'Invoice code is required'
+  }
 	return errors;
 };
 

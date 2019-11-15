@@ -11,7 +11,19 @@ class WorkSheetPage extends React.Component {
 		this.state = {
 			worksheet: [],
 			user: localStorage.getItem('username'),
-			getDataByDate: this.getToday()
+			getDataByDate: this.getToday(),
+			initialvalues: {startTime:'',
+											endTime:'',
+											customer_Id:'', 
+											invoiceCode_Id:'',
+											issueNumber_Id:'',
+											issueName_Id:'',
+											workType_Id:'',
+											ticketNumber_Id:'',
+											ticketCountry_Id:'',
+											description:'sdfgsdfgdfg'
+										},
+			edit:''
 		};
 		this.getData = this.getData.bind(this);
 		this.deleteData = this.deleteData.bind(this);
@@ -67,7 +79,6 @@ class WorkSheetPage extends React.Component {
 	}
 	
 	deleteData (deleteSlot) {
-		console.log(deleteSlot);
 		const config = {
       method: 'DELETE',
       headers: {
@@ -82,21 +93,26 @@ class WorkSheetPage extends React.Component {
 		.then((res) => {
       if (res.status===200){
 				this.getData();
-				console.log('youppiiieeeee');
+				console.log('');
       } else {
         console.log('merrrrdddeeeee ;(')
       }
 		})
 	};
 
+	loadValues(deleteSlot){
+		const editValues = this.state.worksheet.filter(el=>el.timeRegistrationId===deleteSlot);
+		console.log(editValues);
+	}
+
 	render() {
-		const { user } = this.state;
+		const { user, initialvalues } = this.state;
 		return (
 			<div>
         <Header userValues={user} />
-				<TimeRegPage getToday={this.getToday}  getData={this.getData} user={user} />
+				<TimeRegPage initialvalues={initialvalues} getToday={this.getToday}  getData={this.getData} user={user} />
 				<SearchBar onSubmit={this.handleSubmit} />
-				<WorkSheet  deleteRow={this.deleteData} state={this.state} />
+				<WorkSheet  editValues={this.loadValues} deleteRow={this.deleteData} state={this.state} />
 			</div>
 		)
 	}

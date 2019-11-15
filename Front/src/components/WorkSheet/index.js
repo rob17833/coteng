@@ -63,7 +63,7 @@ class Worksheet extends React.Component {
 					<td>{description}</td>
 					<td>
 						<ButtonGroup>
-							<Button color='primary' size='sm'>Edit</Button>
+							<Button color='primary' size='sm' onClick={()=>this.props.editValues(slot.timeRegistrationId)}>Edit</Button>
 							<Button color='danger' size='sm' onClick={()=>this.props.deleteRow(slot.timeRegistrationId)}>Delete</Button>
 						</ButtonGroup>
 					</td>

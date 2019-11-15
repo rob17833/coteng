@@ -18,8 +18,7 @@ class DataTable extends React.Component {
 				'Number Hours'
 			]
 		};
-		
-	}
+	};
 
 	renderTableData() {
 		return this.props.state.result.map((slot, index) =>{
@@ -47,15 +46,14 @@ class DataTable extends React.Component {
 					<td>{time}</td>
 				</tr>
 			)
-		})
-	}
+		});
+	};
 
 	renderTableHeader() {
 		return this.state.headers.map((key, index) => {
 			return <th key={index}>{key}</th>
 		})
 	}
-	// {this.props.state.worksheet.map((slot, index) => <Slot key={index} slot={slot} />)}
 
 	render() {
 		return (
@@ -71,6 +69,6 @@ class DataTable extends React.Component {
 			</div>
 		)
 	}
-}
+};
 
 export default DataTable;

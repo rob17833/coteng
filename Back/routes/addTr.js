@@ -2,7 +2,7 @@ const express = require('express');
 const userRouter = express.Router();
 const connection = require('../conf.js');
 
-// insert new tuple in timeregistration table
+// insert new  dev tuple in timeregistration table
 userRouter.post('/addTr', (req, res) => {
     const formData = req.body;
     res.header("Access-Control-Allow-Origin", "*");
@@ -12,42 +12,35 @@ userRouter.post('/addTr', (req, res) => {
             return res.sendStatus(500);
         }
         res.sendStatus(200);
-    })
-})
-// get user entries
-// userRouter.get('/ws', (req, res) => {
-//     connection.query('SELECT * from timeregistration', (error, results) => {
-//         if (error) {
-//             return res.status(500).send('erreur lors du chargement')
-//         }
-//         res.json(results);
-//     });
-// });
+    });
+});
 
-// select ws by dates for admin
-userRouter.post('/startDate/endDate', (req, res) => {
+// select entries by dates and invoiceCode for admin
+userRouter.post('/period', (req, res) => {
     const start = req.body.startDate;
     const end = req.body.endDate;
-    connection.query('SELECT time, employee_Id, date, customer_Id, invoiceCode_Id, issueNumber_Id, issueName_Id, ticketCountry_Id, ticketNumber_Id from timeregistration WHERE date>=? AND date<=? ', [start, end], (error, results) =>{
+    const invoice = req.body.invoiceCode;
+    connection.query('SELECT time, employee_Id, date, customer_Id, invoiceCode_Id, issueNumber_Id, issueName_Id, ticketCountry_Id, ticketNumber_Id from timeregistration WHERE date>=? AND date<=? And invoiceCode_Id=? ', [start, end, invoice], (error, results) =>{
         if (error){
-            return res.sendStatus(500).send('aie, pas bon')
+            return res.sendStatus(500).send('Something bad happened')
         }
         res.json(results);
         console.log(results)
-    })
-})
-// select worksheet by employee
+    });
+});
+
+// select worksheet by dev
 userRouter.post('/:id', (req, res) => {
     const user = req.query.username;
     const formData = req.body.getDataByDate;
-    console.log(`back ${req.body.getDataByDate}`);
     connection.query('SELECT* from timeregistration WHERE employee_Id=? AND date=?', [user, formData], (error, results) =>{
         if (error) {
             return res.status(500).send('something went wrong')
         }
         res.json(results);
     });
-})
+});
+
 // verify usersname and password
 userRouter.post('/auth/login', function(req, res) {
     const user = req.body.username;

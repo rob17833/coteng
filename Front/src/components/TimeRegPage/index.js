@@ -10,7 +10,6 @@ class TimeRegPage extends React.Component {
     this.state = {
       status: 'form'
     };
-    console.log(this.props);
   }
 
 //get nbr of hours from entries+today's date and fetch
@@ -50,13 +49,14 @@ class TimeRegPage extends React.Component {
   
   
   render() {
-    const { status, user } = this.state;
+    const { status } = this.state;
     return (
       <div>
         <TimeRegForm
+          updateValues={this.props.updateValues}
           onSubmit={ this.handleSend }
           status={ status } 
-          initialValues={{employee_Id: {user}, date: this.Today}}
+          initialValues={this.props.initialValues}
           />
       </div>
     );
