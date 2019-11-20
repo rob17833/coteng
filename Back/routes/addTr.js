@@ -32,7 +32,7 @@ userRouter.post('/period', (req, res) => {
 // select worksheet by dev
 userRouter.post('/:id', (req, res) => {
     const user = req.query.username;
-    const formData = req.body.getDataByDate;
+    const formData = req.body.date;
     connection.query('SELECT* from timeregistration WHERE employee_Id=? AND date=?', [user, formData], (error, results) =>{
         if (error) {
             return res.status(500).send('something went wrong')
@@ -65,6 +65,19 @@ userRouter.delete('/delete/:id', function(req, res){
             res.status(200).send('deleted!');
         });
     };
+});
+
+// update row
+userRouter.put('/update/:id', function(req, res){
+    const rowId = req.params.id;
+    console.log(rowId);
+    const formData = req.body;
+    connection.query('update timeregistration set? where timeRegistrationId=?', [formData, rowId], (error)=>{
+        if(error){
+            return res.status(500).send('can not update the table')
+        }
+        res.sendStatus(200);
+    });
 });
 
 module.exports = userRouter;

@@ -25,8 +25,6 @@ class Worksheet extends React.Component {
 								'Edit/Delete'
 							]
 		};
-		
-		console.log()
 	}
 	
 	renderTableData() {
@@ -64,7 +62,8 @@ class Worksheet extends React.Component {
 					<td>
 						<ButtonGroup>
 							<Button color='primary' size='sm' onClick={()=>this.props.editValues(slot.timeRegistrationId)}>Edit</Button>
-							<Button color='danger' size='sm' onClick={()=>this.props.deleteRow(slot.timeRegistrationId)}>Delete</Button>
+							{/* <Button color='success' size='sm' onClick={()=>this.props.editValues(slot.timeRegistrationId)}>Dup</Button> */}
+							<Button color='danger' size='sm' onClick={()=>this.props.deleteRow(slot.timeRegistrationId)}>X</Button>
 						</ButtonGroup>
 					</td>
 				</tr>

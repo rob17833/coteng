@@ -10,25 +10,16 @@ class WorkSheetPage extends React.Component {
 		super(props);
 		this.state = {
 			worksheet: [],
-			user: localStorage.getItem('username'),
-			getDataByDate: this.getToday(),
-			initialvalues: {startTime:'',
-											endTime:'',
-											customer_Id:'', 
-											invoiceCode_Id:'',
-											issueNumber_Id:'',
-											issueName_Id:'',
-											workType_Id:'',
-											ticketNumber_Id:'',
-											ticketCountry_Id:'',
-											description:'sdfgsdfgdfg'
-										},
-			edit:''
+			route:true,
+			updateSlot: 0,
+			initialvalues: {
+				employee_Id: localStorage.getItem('username'),
+				date: this.getToday()
+			},
 		};
 		this.getData = this.getData.bind(this);
 		this.deleteData = this.deleteData.bind(this);
 		this.getToday = this.getToday.bind(this);
-		console.log(`state ${this.state.getDataByDate}`);
 	}
 	
 	getToday () {
@@ -43,27 +34,20 @@ class WorkSheetPage extends React.Component {
 		this.getData();
 	};
 
-	handleSubmit = (values) => {
-		const date = values.date
-		this.setState({
-			getDataByDate: date
-		});
-		console.log(this.state.getDataByDate);
-	};
-
+	
 	getData () {
-		const user = this.state.user;
+		const user = this.state.initialvalues.employee_Id;
 		let inital = [];
 		const url = `http://localhost:5000/search?username=${user}`;
 		const config = {
-      method: 'POST',
+			method: 'POST',
       headers: {
-        'Accept': 'application/json, text/plain, */*',
+				'Accept': 'application/json, text/plain, */*',
         'Content-type':'application/json',
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify(this.state.initialvalues)
 		};
-		console.log(`check date before sending ${config.body}`);
+		// console.log(`check body before sending ${config.body}`);
 		fetch(url, config)
 		.then(response => {
 			return response.json();
@@ -74,10 +58,24 @@ class WorkSheetPage extends React.Component {
 			});
 			this.setState({
 				worksheet: inital,
+				route:true
 			});
 		});
 	}
 	
+	getDataByDate = (values) => {
+		const date = values.date
+		this.setState({
+			initialvalues:{
+				date: date,
+				employee_Id: localStorage.getItem('username')
+			}
+		}, ()=>console.log(this.state.initialvalues.date));
+		setTimeout(()=>this.getData(), 500);
+	};
+
+
+
 	deleteData (deleteSlot) {
 		const config = {
       method: 'DELETE',
@@ -93,25 +91,44 @@ class WorkSheetPage extends React.Component {
 		.then((res) => {
       if (res.status===200){
 				this.getData();
-				console.log('');
       } else {
         console.log('merrrrdddeeeee ;(')
       }
 		})
 	};
 
-	loadValues(deleteSlot){
+	loadValues=(deleteSlot)=>{
+		console.log(`deleteslot nb:${deleteSlot}`);
 		const editValues = this.state.worksheet.filter(el=>el.timeRegistrationId===deleteSlot);
-		console.log(editValues);
-	}
-
+		this.setState({
+			updateSlot: deleteSlot,
+			route:false,
+			initialvalues:{
+				employee_Id: localStorage.getItem('username'),
+				date: editValues[0].date,	
+				startTime: editValues[0].startTime,
+				endTime: editValues[0].endTime,
+				time: editValues[0].time,
+				customer_Id: editValues[0].customer_Id, 
+				invoiceCode_Id: editValues[0].invoiceCode_Id,
+				issueNumber_Id: editValues[0].issueNumber_Id,
+				issueName_Id: editValues[0].issueName_Id,
+				workType_Id: editValues[0].workType_Id,
+				ticketNumber_Id: editValues[0].ticketNumber_Id,
+				ticketCountry_Id: editValues[0].ticketCountry_Id,
+				description: editValues[0].description
+			}
+		});
+	};
+	
 	render() {
-		const { user, initialvalues } = this.state;
+		const { initialvalues, route, updateSlot } = this.state;
+		// console.log(initialvalues);
 		return (
 			<div>
-        <Header userValues={user} />
-				<TimeRegPage initialvalues={initialvalues} getToday={this.getToday}  getData={this.getData} user={user} />
-				<SearchBar onSubmit={this.handleSubmit} />
+        <Header userValues={this.state.initialvalues.employee_Id} />
+				<TimeRegPage route={route} initialValues={initialvalues} getToday={this.getToday}  getData={this.getData} timeRegistrationId={updateSlot} />
+				<SearchBar onSubmit={this.getDataByDate} />
 				<WorkSheet  editValues={this.loadValues} deleteRow={this.deleteData} state={this.state} />
 			</div>
 		)

@@ -11,14 +11,16 @@ import InputField from '../InputField/index';
 
 let TimeRegForm = (props) => {
   const { handleSubmit, status, reset, pristine, submitting } = props;
+  // console.log(initialValues);
+
   return (
     <Container fluid={true}>
       <Form onSubmit={handleSubmit} className={status}>
-        {/* <Row>
+        <Row>
           <Col>
             <Field
               id="employee"
-              type="hidden"
+              type="text"
               name="employee_Id"
               component="input"
               className="form-control"
@@ -28,14 +30,14 @@ let TimeRegForm = (props) => {
           <Col>
             <Field
               id="date"
-              type="hidden"
+              type="date"
               name="date"
               component="input"
               className="form-control"
               placeholder="Date"
             />
           </Col>
-        </Row> */}
+        </Row>
         <Row>
           <Col>
             <Field
@@ -196,6 +198,7 @@ const validate = (values) => {
 
 TimeRegForm = reduxForm({
   form: 'timereg',
+  enableReinitialize: true,
   validate
 })(TimeRegForm);
 export default TimeRegForm;
